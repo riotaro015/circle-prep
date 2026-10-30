@@ -4,7 +4,7 @@
 
 荷造り、やること、当日の予定、レジ・在庫をイベントごとに管理できます。BESTIA WORKSが制作するアプリのひとつです。
 
-[Web版を使う](https://riotaro015.github.io/circle-prep/app/) · [紹介ページ・画面・使い方](https://riotaro015.github.io/circle-prep/) · [APKをダウンロード](https://github.com/riotaro015/circle-prep/releases/download/v0.1.8/circle-prep-0.1.8.apk) · [更新履歴](https://github.com/riotaro015/circle-prep/releases) · [BESTIA WORKS](https://bestiaworks.com/)
+[Web版を使う](https://riotaro015.github.io/circle-prep/app/) · [紹介ページ・画面・使い方](https://riotaro015.github.io/circle-prep/) · [APKをダウンロード](https://github.com/riotaro015/circle-prep/releases/download/v0.1.9/circle-prep-0.1.9.apk) · [更新履歴](https://github.com/riotaro015/circle-prep/releases) · [BESTIA WORKS](https://bestiaworks.com/)
 
 <a href="https://riotaro015.github.io/circle-prep/#screens"><img src="docs/assets/bags.png" width="180" alt="荷物の画面"> <img src="docs/assets/map.png" width="180" alt="サークルマップの画面"> <img src="docs/assets/notes.png" width="180" alt="メモの画面"></a>
 
@@ -48,7 +48,7 @@ Android 8.0以上が対象です。現在の配布版はテスト版です。
 
 更新するときは、先に設定からバックアップを書き出し、新しいAPKを上書きインストールしてください。既存アプリをアンインストールすると端末内の記録が消えます。
 
-**公開テスト版：0.1.8**。実機での確認は継続中です。
+**公開テスト版：0.1.9**。実機での確認は継続中です。
 
 この版を入れた後は、設定の「最新版に更新」で最新版の確認・APK取得・検証・Android標準の更新画面まで進めます。最後のインストール確認と、必要な初回の提供元許可はAndroidで行います。APKやGitHubのAssetsを手で選ぶ必要はありません。
 
@@ -85,4 +85,4 @@ Android版は画面・フォント・イベントデータを同梱し、通常�
 
 ## 売上分析（0.1.7）
 
-レジの「設定詳細」→「売上分析」で、時間帯別の頒布点数・会計件数、購入パターン別の会計数・売上、頒布物の組み合わせを確認できます。頒布物の区分は新刊・既刊・グッズ・未分類。取消と取り置きは集計から除外し、時刻は日本時間で表示します。分析は端末内で行い、記録を外部へ送信しません。
+レジの「設定詳細」→「売上分析」で、時間帯別の頒布点数・会計件数、購入パターン別の会計数・売上、頒布物の組み合わせを確認できます。頒布物の区分は新刊・準新刊・既刊・グッズ・無配・その他。旧記録用の未分類も保持します。取消と取り置きは集計から除外し、時刻は日本時間で表示します。分析は端末内で行い、記録を外部へ送信しません。

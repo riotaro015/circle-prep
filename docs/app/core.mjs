@@ -1,3 +1,4 @@
+import {releaseCodes} from './release-categories.mjs';
 import {validateNotes} from './notes-model.mjs';
 import {validateMap,validLink} from './map-model.mjs';
 import {validRecordIcon} from './record-icons.mjs';
@@ -28,7 +29,7 @@ export function validateRegister(d){
  for(const p of d.products){
   if(typeof p.name!=='string'||!p.name.trim()||!int(p.price)||!int(p.stock)||typeof p.active!=='boolean'||typeof p.image!=='string'||p.image.length>8000000)fail('頒布物情報が不正です。');
   if(!/^[A-Za-z0-9+/]*={0,2}$/.test(p.image)||p.image.length%4)fail('頒布物画像が不正です。');
-  if(!['','new','backlist','goods'].includes(p.release_mark||''))fail('頒布物マークが不正です。');
+  if(!releaseCodes.includes(p.release_mark||''))fail('頒布物マークが不正です。');
   if(p.thumbnail&&(!Number.isFinite(p.thumbnail.x)||p.thumbnail.x<0||p.thumbnail.x>1||!Number.isFinite(p.thumbnail.y)||p.thumbnail.y<0||p.thumbnail.y>1||!Number.isFinite(p.thumbnail.zoom)||p.thumbnail.zoom<1||p.thumbnail.zoom>4))fail('画像の切り抜きが不正です。');
  }
  for(const a of d.adjustments){
@@ -39,7 +40,7 @@ export function validateRegister(d){
   if(!['cash','gift'].includes(s.kind)||typeof s.cancelled!=='boolean'||!Array.isArray(s.lines)||!s.lines.length)fail('会計記録が不正です。');
   let total=0;for(const l of s.lines){
    if(!balances.has(l.product_id)||!int(l.quantity,1)||!int(l.price)||typeof l.name!=='string')fail('会計明細が不正です。');
-   if(l.release_mark!==undefined&&!['','new','backlist','goods'].includes(l.release_mark))fail('頒布物マークが不正です。');total+=l.price*l.quantity;if(!s.cancelled)balances.set(l.product_id,balances.get(l.product_id)-l.quantity);
+   if(l.release_mark!==undefined&&!releaseCodes.includes(l.release_mark))fail('頒布物マークが不正です。');total+=l.price*l.quantity;if(!s.cancelled)balances.set(l.product_id,balances.get(l.product_id)-l.quantity);
   }
   if(s.kind==='gift')total=0;
   if(!int(total)||!int(s.total)||s.total!==total||!int(s.paid)||s.paid<total||!int(s.change)||s.change!==s.paid-total||['at','cancelled_at','recipient'].some(k=>typeof s[k]!=='string'))fail('会計金額が不正です。');
@@ -142,8 +143,8 @@ export function validateState(s){
  if(s.events.length&&!ids.has(s.active))fail('選択中のイベントが不正です。');return s;
 }
 
-export const markCode=value=>({'新':'new','既':'backlist'}[value]??value);
-export const markLabel=value=>({'new':'新','backlist':'既','goods':'グッズ'}[value]??value);
+export const markCode=value=>({'新':'new','新刊':'new','準新':'recent','準新刊':'recent','既':'backlist','既刊':'backlist','グッズ':'goods','無配':'free','その他':'other'}[value]??value);
+export const markLabel=value=>({'new':'新','recent':'準新刊','backlist':'既','goods':'グッズ','free':'無配','other':'その他'}[value]??value);
 export function migrateRegister(original){
  if(!original||![1,2].includes(original.version))fail('レジの形式が正しくありません。');
  const data=structuredClone(original);if(data.version===2)return data;

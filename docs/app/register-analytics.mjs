@@ -1,5 +1,6 @@
-export const categories=['new','backlist','goods','unclassified'];
-export const categoryNames={new:'新刊',backlist:'既刊',goods:'グッズ',unclassified:'未分類'};
+import {releaseKinds,releaseNames} from './release-categories.mjs';
+export const categories=[...releaseKinds,'unclassified'];
+export const categoryNames=releaseNames;
 export const categoryFor=value=>categories.includes(value)?value:'unclassified';
 export function jstParts(value){const date=new Date(value);if(!Number.isFinite(date.getTime()))return null;const local=new Date(date.getTime()+9*3600000);return {day:local.toISOString().slice(0,10),minute:local.getUTCHours()*60+local.getUTCMinutes()}}
 export const clock=minute=>String(Math.floor(minute/60)).padStart(2,'0')+':'+String(minute%60).padStart(2,'0');
