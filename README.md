@@ -10,6 +10,12 @@
 
 画面例は架空のイベント・商品・会場図を使用しています。機能・導入方法・詳しい仕様は[紹介ページ](https://riotaro015.github.io/circle-prep/)にまとめています。
 
+## お品書きだけを閲覧
+
+[野郎フェス2026 お品書き一覧](https://riotaro015.github.io/circle-prep/menus/)は、アプリ不要で検索・画像拡大・商品価格の確認ができます。チェックしたサークルはブラウザー内に保存します。
+
+画像を含むオフライン保存と、[ZIPを展開してHTMLを開くだけのオフライン版](https://github.com/riotaro015/circle-prep/releases/download/v0.1.6/yaroufes-2026-menus-offline.zip)にも対応しています。
+
 ## ダウンロード
 
 [Releases](https://github.com/riotaro015/circle-prep/releases) で Android版APKとSHA-256チェックサムを配布しています。各版の変更内容もこちらに掲載します。
