@@ -1,5 +1,5 @@
 ﻿野郎フェス2026 お品書き一覧
 
-公開ページ：https://riotaro015.github.io/circle-prep/menus/
+公開ページ：https://riotaro015.github.io/circle-prep/events/yaroufes/2026-autumn/
 ページ下部の「ネットなしで見るために保存」から、お品書きと画像をブラウザー内に保存できます。
 ファイルのダウンロードではありません。同じブラウザーでページを開いて使います。
