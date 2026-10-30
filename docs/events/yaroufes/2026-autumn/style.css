@@ -43,3 +43,5 @@
  .venue-selection-actions button{width:100%;min-height:48px;font-size:14px}
  .venue-selection .small-note{margin:0;font-size:13px}
 }
+
+.venue-seat{pointer-events:none;cursor:inherit}.venue-seat:hover{stroke:transparent}.venue-seat.pending:hover{stroke:#c74d5d}.venue-seat.partial:hover{stroke:#bd8f29}.venue-seat.bought:hover{stroke:#397c5c}
