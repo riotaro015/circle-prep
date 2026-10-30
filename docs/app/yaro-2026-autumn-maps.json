@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "name": "野郎フェス2026-autumn-配置図_v1.pdf",
+  "pdf": "yaro-2026-autumn-map-v1.pdf",
+  "attribution": {
+    "date": "2026-10-28",
+    "url": "https://yaroufes.info/20261007/757/"
+  },
+  "maps": [
+    {
+      "hall": "大展示",
+      "page": 1
+    },
+    {
+      "hall": "小展示",
+      "page": 2
+    }
+  ],
+  "sha256": "c446f6c59d13a541a106ef13275ec92cc1d1df06773e59d4d37b563739311014"
+}

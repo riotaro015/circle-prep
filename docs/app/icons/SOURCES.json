@@ -1,0 +1,97 @@
+{
+  "provider": "ICOOON MONO",
+  "license": "https://icooon-mono.com/license/",
+  "usage": "Local application UI icons; no redistribution as an icon pack.",
+  "icons": {
+    "home": {
+      "page": "https://icooon-mono.com/15038-ホームアイコン/",
+      "asset": "https://icooon-mono.com/i/icon_15038/icon_150380.svg"
+    },
+    "tasks": {
+      "page": "https://icooon-mono.com/12046-チェックシートのアイコン/",
+      "asset": "https://icooon-mono.com/i/icon_12046/icon_120460.svg"
+    },
+    "bags": {
+      "page": "https://icooon-mono.com/00060-カバンのアイコン素材/",
+      "asset": "https://icooon-mono.com/i/icon_00060/icon_000600.svg"
+    },
+    "register": {
+      "page": "https://icooon-mono.com/16289-レシートの無料イラスト/",
+      "asset": "https://icooon-mono.com/i/icon_16289/icon_162890.svg"
+    },
+    "settings": {
+      "page": "https://icooon-mono.com/16009-歯車のフリーアイコン/",
+      "asset": "https://icooon-mono.com/i/icon_16009/icon_160090.svg"
+    },
+    "plus": {
+      "page": "https://icooon-mono.com/00105-プラスのアイコン素材/",
+      "asset": "https://icooon-mono.com/i/icon_00105/icon_001050.svg"
+    },
+    "edit": {
+      "page": "https://icooon-mono.com/15441-鉛筆の無料アイコン7/",
+      "asset": "https://icooon-mono.com/i/icon_15441/icon_154410.svg"
+    },
+    "trash": {
+      "page": "https://icooon-mono.com/15910-ゴミ箱のフリーアイコン/",
+      "asset": "https://icooon-mono.com/i/icon_15910/icon_159100.svg"
+    },
+    "search": {
+      "page": "https://icooon-mono.com/10819-虫眼鏡のアイコン/",
+      "asset": "https://icooon-mono.com/i/icon_10819/icon_108190.svg"
+    },
+    "reset": {
+      "page": "https://icooon-mono.com/15803-更新ボタン/",
+      "asset": "https://icooon-mono.com/i/icon_15803/icon_158030.svg"
+    },
+    "download": {
+      "page": "https://icooon-mono.com/16298-ダウンロードアイコン/",
+      "asset": "https://icooon-mono.com/i/icon_16298/icon_162980.svg"
+    },
+    "back": {
+      "page": "https://icooon-mono.com/15449-コントロールボタン/",
+      "asset": "https://icooon-mono.com/i/icon_15449/icon_154490.svg"
+    },
+    "map": {
+      "page": "https://icooon-mono.com/10988-地図＆マーカーアイコン2/",
+      "asset": "https://icooon-mono.com/i/icon_10988/icon_109880.svg"
+    },
+    "notes": {
+      "page": "https://icooon-mono.com/15441-鉛筆の無料アイコン7/",
+      "asset": "https://icooon-mono.com/i/icon_15441/icon_154410.svg",
+      "usage": "Memo tab reuses the locally stored pencil icon."
+    },
+    "draw-move": {
+      "page": "https://icooon-mono.com/11643-無料の手のひらアイコン/",
+      "asset": "https://icooon-mono.com/i/icon_11643/icon_116430.svg"
+    },
+    "draw-marker": {
+      "page": "https://icooon-mono.com/11108-マーカーのアイコン素材/",
+      "asset": "https://icooon-mono.com/i/icon_11108/icon_111080.svg"
+    },
+    "draw-text": {
+      "page": "https://icooon-mono.com/15211-文字サイズアイコン1/",
+      "asset": "https://icooon-mono.com/i/icon_15211/icon_152110.svg"
+    },
+    "draw-rect": {
+      "page": "https://icooon-mono.com/15452-再生停止ボタン/",
+      "asset": "https://icooon-mono.com/i/icon_15452/icon_154520.svg"
+    },
+    "draw-undo": {
+      "page": "https://icooon-mono.com/12605-uターン矢印-2/",
+      "asset": "https://icooon-mono.com/i/icon_12605/icon_126050.svg"
+    },
+    "window-close": {
+      "page": "https://icooon-mono.com/11912-ノーマルの太さのバツアイコン/",
+      "asset": "https://icooon-mono.com/i/icon_11912/icon_119120.svg"
+    },
+    "window-minimize": {
+      "page": "https://icooon-mono.com/00106-マイナスのアイコン素材/",
+      "asset": "https://icooon-mono.com/i/icon_00106/icon_001060.svg"
+    },
+    "plus-simple": {
+      "page": "https://icooon-mono.com/00105-プラスのアイコン素材/",
+      "asset": "https://icooon-mono.com/i/icon_00105/icon_001050.svg",
+      "adaptation": "Isolated plus polygon and cropped viewBox."
+    }
+  }
+}
