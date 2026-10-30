@@ -6,3 +6,5 @@
 @media(prefers-reduced-motion:reduce){button{transition:none}}
 
 .shopping-summary{flex-wrap:wrap}.shopping-summary>div,.shopping-product{min-width:0}.shopping-subtotal{max-width:100%}@media(max-width:580px){.shopping-summary strong{font-size:clamp(30px,9vw,45px)}}
+
+.visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.intro{padding-top:28px;padding-bottom:22px}.intro .eyebrow{font-weight:800;font-size:17px;margin-bottom:9px;color:var(--ink);letter-spacing:0}.intro h1{font-weight:800;font-size:clamp(38px,5vw,58px)}.search-label.visually-hidden{margin:0}.card-main .author{margin-bottom:0}.offline-panel>details>.small-note{margin-top:0}@media(max-width:580px){.intro{padding-top:22px;padding-bottom:18px}.intro .eyebrow{font-size:15px;margin-bottom:8px}.intro h1{font-size:40px}.search-panel{padding-top:17px}}
