@@ -44,7 +44,7 @@ export function mountAnnotations(viewport,s,getItems,save,modal,field,toast){
  },true);
  viewport.addEventListener('pointermove',ev=>{
   if(!points.has(ev.pointerId))return;consume(ev);points.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});
-  if(points.size===2&&gesture){const [a,b]=[...points.values()],x=(a.x+b.x)/2,y=(a.y+b.y)/2,distance=Math.hypot(a.x-b.x,a.y-b.y);viewport._zoomAt(distance/Math.max(1,gesture.distance),x,y);viewport._panBy(x-gesture.x,y-gesture.y);gesture={distance,x,y};return}
+  if(points.size===2&&gesture){const [a,b]=[...points.values()],x=(a.x+b.x)/2,y=(a.y+b.y)/2,distance=Math.hypot(a.x-b.x,a.y-b.y);gesture={distance,x,y};return}
   if(eraseDraft){eraseAt(ev);return}if(!draft)return;const p=normalized(ev);if(draft.tool==='rect')draft.points=[draft.points[0],p];else if(draft.points.length<4000)draft.points.push(p);paint();
  },true);
  viewport.addEventListener('pointerup',ev=>{

@@ -1,5 +1,6 @@
+import {installMapEditGuard,syncMapEditGuard} from './map-edit-guard.mjs';
 import {markerStyle,mountMarkerEditor} from './circle-marker.mjs';
-import {distributionMapFile,loadDistributionMaps,mergeDistributionMaps,citationText} from './distribution-maps.mjs';
+import {distributionMapFile,loadDistributionMaps,mergeDistributionMaps,citationText,distributionVectorImage} from './distribution-maps.mjs';
 import {openMapImport} from './pdf-map-ui.mjs';
 import {mapSteps} from './map-steps.mjs';
 import {protect,markup,t} from './i18n.mjs';
@@ -20,7 +21,7 @@ export function mapScreen(e){
  ${m&&!s.edit&&!s.marker?`<div class="map-step-strip">${mapSteps(d,s.hall,button)}</div>`:''}
  ${m?.demo?'<p class="map-demo-note">操作確認用マップです。実際の会場配置ではありません。</p>':''}
  <div class="map-workspace">${s.edit&&m?annotationToolbar(s,m.annotations||[]):''}<div class="map-viewport ${s.edit?'editing':''}" tabindex="0" aria-label="会場図。ドラッグで移動、ピンチまたはホイールで拡大。位置指定ボタンからスペースを登録できます。">
- ${m?`<div class="map-plane"><img class="map-image" src="${m.image}" alt="${esc(hallLabel(s.hall))}の会場図" draggable="false">${annotationLayer(m.annotations||[])}<div class="map-pins">${d.circles.filter(c=>c.id!==s.marker?.id&&c.hall===s.hall&&c.x!=null&&(c.highlight||c.own||c.id===s.selected)).map(c=>button('pin',`<span>${esc([c.space,c.name].filter(Boolean).join(' · '))}</span>`,`data-id="${esc(c.id)}" aria-label="${esc(c.space+' '+c.name)}" style="${markerStyle(c)}"`,'map-pin map-circle-marker'+(c.own?' own':'')+(c.status==='訪問済み'?' visited':'')+(c.id===s.selected?' active':''))).join('')}</div></div>`:`${mapSteps(d,s.hall,button)}`}
+ ${m?`<div class="map-plane"><img class="map-image" data-vector-map="${distributionVectorImage(m)?'1':'0'}" src="${distributionVectorImage(m)||m.image}" alt="${esc(hallLabel(s.hall))}の会場図" draggable="false">${annotationLayer(m.annotations||[])}<div class="map-pins">${d.circles.filter(c=>c.id!==s.marker?.id&&c.hall===s.hall&&c.x!=null&&(c.highlight||c.own||c.id===s.selected)).map(c=>button('pin',`<span>${esc([c.space,c.name].filter(Boolean).join(' · '))}</span>`,`data-id="${esc(c.id)}" aria-label="${esc(c.space+' '+c.name)}" style="${markerStyle(c)}"`,'map-pin map-circle-marker'+(c.own?' own':'')+(c.status==='訪問済み'?' visited':'')+(c.id===s.selected?' active':''))).join('')}</div></div>`:`${mapSteps(d,s.hall,button)}`}
  <div class="map-zoom" role="group" aria-label="マップ表示">${button('out','−','aria-label="縮小"')}${button('fit','全体表示')}${button('in','＋','aria-label="拡大"')}</div>
  ${s.marker?`<div class="map-marker-note"><strong>${esc(d.circles.find(c=>c.id===s.marker.id)?.space||'')}</strong><p>丸を動かし、端のつまみで大きさを調整してください。</p><div>${button('marker-save','保存','','primary')}${button('marker-cancel','キャンセル')}</div></div>`:''}
  ${s.place?`<div class="map-place-note" role="status">${esc(d.circles.find(c=>c.id===s.place)?.name||'')}の位置をタップしてください ${button('cancel-place','キャンセル')}</div>`:''}
@@ -33,6 +34,7 @@ function list(){const e=api.getEvent();if(!e)return;const d=data(e),s=state(e),t
  target.innerHTML=markup(rows.length?rows.map(c=>`<div class="map-list-row ${c.own?'own':''} ${s.selected===c.id?'active':''}"><label class="map-list-select"><input type="checkbox" data-circle-check="${esc(c.id)}" ${c.highlight?'checked':''} aria-label="${esc(c.name)}をチェック"><span class="map-list-focus"><span class="map-list-space">${esc(hallLabel(c.hall))} ${esc(c.space)}${c.own?' · 自分':''}</span><strong>${esc(c.name)}</strong><small>${esc([t(c.status),c.x==null?t('位置未指定'):'',c.highlight?t('ハイライト'):''].filter(Boolean).join(' · '))}</small></span></label>${button('detail','詳細',`data-id="${esc(c.id)}"`,'map-list-detail')}</div>`).join(''):d.circles.length?'<p class="muted">該当するサークルはありません。追加または一覧の読み込みをお試しください。</p>':`<div class="map-list-onboarding"><p class="map-step-number">STEP 2</p><h2>サークルを登録</h2><p>サークルを追加すると、会場図に位置を登録できます。</p>${button('add','サークルを追加','','primary')}<p class="muted">サークル登録と場所の指定は任意です。書き込みだけでも使えます。</p></div>`);
 }
 export function mountMap(){
+ syncMapEditGuard();
  const viewport=document.querySelector('.map-viewport');if(!viewport)return;resizeObserver?.disconnect();
  const e=api.getEvent(),s=state(e);list();mountFloating(s);const scrollList=document.querySelector('#map-circle-list');scrollList.scrollTop=s.listScroll;scrollList.addEventListener('scroll',()=>s.listScroll=scrollList.scrollTop);
  const circleFile=circleCatalogFile(e.metadata);
@@ -45,9 +47,9 @@ export function mountMap(){
  const plane=viewport.querySelector('.map-plane'),image=viewport.querySelector('.map-image');let baseW=0,baseH=0;
  function position(){if(!plane)return;const ratio=image.naturalWidth/image.naturalHeight||1.4;const vw=viewport.clientWidth,vh=viewport.clientHeight;baseW=Math.min(vw,vh*ratio);baseH=baseW/ratio;
   if(s.focus){const c=data(api.getEvent()).circles.find(c=>c.id===s.selected);if(c?.x!=null){s.zoom=Math.max(s.zoom,1.8);s.panX=(.5-c.x)*baseW*s.zoom;s.panY=(.5-c.y)*baseH*s.zoom}s.focus=false}
-  plane.style.width=baseW+'px';plane.style.height=baseH+'px';plane.style.transform=`translate(-50%,-50%) translate(${s.panX}px,${s.panY}px) scale(${s.zoom})`;plane.style.setProperty('--inverse',1/s.zoom);
+  const drawScale=image.dataset.vectorMap==='1'?s.zoom:1;plane.style.width=baseW*drawScale+'px';plane.style.height=baseH*drawScale+'px';plane.style.transform=`translate(-50%,-50%) translate(${s.panX}px,${s.panY}px) scale(${s.zoom/drawScale})`;plane.style.setProperty('--inverse',1/s.zoom);
  }
- if(image){image.onload=position;if(image.complete)position()}
+ if(image){image.onload=position;image.onerror=()=>{if(image.dataset.vectorMap==='1'){image.dataset.vectorMap='0';image.src=data(e).maps.find(m=>m.hall===s.hall)?.image||''}};if(image.complete){if(!image.naturalWidth&&image.dataset.vectorMap==='1')image.onerror();else position()}}
  resizeObserver=new ResizeObserver(position);resizeObserver.observe(viewport);
  viewport._position=position;
  viewport._panBy=(x,y)=>{s.panX+=x;s.panY+=y;position()};
@@ -57,7 +59,7 @@ export function mountMap(){
  if(s.marker)mountMarkerEditor(plane,s.marker,t);
  let points=new Map(),start=null,pinch=null,longTimer=null;
  function cancelLong(){clearTimeout(longTimer);longTimer=null}
- viewport.addEventListener('wheel',ev=>{if(!plane)return;ev.preventDefault();viewport._zoomAt(ev.deltaY<0?1.15:1/1.15,ev.clientX,ev.clientY)},{passive:false});
+ viewport.addEventListener('wheel',ev=>{if(!plane)return;ev.preventDefault();if(s.edit)return;viewport._zoomAt(ev.deltaY<0?1.15:1/1.15,ev.clientX,ev.clientY)},{passive:false});
  viewport.addEventListener('pointerdown',ev=>{if(!plane||ev.target.closest('button'))return;ev.preventDefault();viewport.setPointerCapture(ev.pointerId);points.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});start={x:ev.clientX,y:ev.clientY,panX:s.panX,panY:s.panY,moved:false};
   if(points.size===2){cancelLong();const [a,b]=[...points.values()];pinch={distance:Math.hypot(a.x-b.x,a.y-b.y),zoom:s.zoom,x:(a.x+b.x)/2,y:(a.y+b.y)/2};}
   else if(!s.place&&!s.edit&&!s.marker)longTimer=setTimeout(()=>{const r=plane.getBoundingClientRect(),x=(ev.clientX-r.left)/r.width,y=(ev.clientY-r.top)/r.height;if(x>=0&&x<=1&&y>=0&&y<=1){start.moved=true;editor(null,{hall:s.hall,x,y})}},650);
@@ -70,7 +72,7 @@ export function mountMap(){
   if(s.place&&!start?.moved&&count===1){const r=plane.getBoundingClientRect(),x=(ev.clientX-r.left)/r.width,y=(ev.clientY-r.top)/r.height;if(x>=0&&x<=1&&y>=0&&y<=1){try{const id=s.place;s.place=null;await mapEdit(d=>setPosition(d,id,x,y),e.id);api.toast('位置を登録しました')}catch(err){api.toast(err.message)}}}
  });
  viewport.addEventListener('pointercancel',()=>{cancelLong();points.clear();pinch=null});
- viewport.addEventListener('keydown',ev=>{if(!plane)return;if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','-','0'].includes(ev.key)){ev.preventDefault();if(ev.key==='+')s.zoom=Math.min(12,s.zoom*1.2);if(ev.key==='-')s.zoom=Math.max(1,s.zoom/1.2);if(ev.key==='0'){s.zoom=1;s.panX=s.panY=0}if(ev.key==='ArrowLeft')s.panX+=40;if(ev.key==='ArrowRight')s.panX-=40;if(ev.key==='ArrowUp')s.panY+=40;if(ev.key==='ArrowDown')s.panY-=40;position()}});
+ viewport.addEventListener('keydown',ev=>{if(!plane||s.edit)return;if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','-','0'].includes(ev.key)){ev.preventDefault();if(ev.key==='+')s.zoom=Math.min(12,s.zoom*1.2);if(ev.key==='-')s.zoom=Math.max(1,s.zoom/1.2);if(ev.key==='0'){s.zoom=1;s.panX=s.panY=0}if(ev.key==='ArrowLeft')s.panX+=40;if(ev.key==='ArrowRight')s.panX-=40;if(ev.key==='ArrowUp')s.panY+=40;if(ev.key==='ArrowDown')s.panY-=40;position()}});
 }
 async function readImage(file,max=4096){
  if(!file?.size||!['image/jpeg','image/png','image/webp'].includes(file.type))throw Error('PNG・JPEG・WebP画像を選んでください。');if(file.size>20000000)throw Error('画像は20MB以下を選んでください。');
@@ -91,7 +93,7 @@ function editor(id,initial={}){
 function focusCircle(id){const e=api.getEvent(),c=data(e).circles.find(c=>c.id===id);if(!c)return;const s=state(e);if(s.hall!==c.hall){s.undo=[];s.redo=[]}s.edit=false;s.view='map';s.hall=c.hall;s.selected=id;s.focus=true;s.zoom=1;s.panX=s.panY=0;api.render();if(c.x==null)api.toast('位置未指定です。「詳細」からマップで位置を指定できます。')}
 function upload(){openMapImport(api,state(api.getEvent()),readImage)}
 function startMarker(c){const s=state(api.getEvent());s.edit=false;s.view='map';s.floating=false;s.open=false;s.place=null;s.hall=c.hall;s.selected=c.id;s.marker={id:c.id,x:c.x??.5,y:c.y??.5,radius:c.radius??.025}}
-export function installMap(options){api=options;
+export function installMap(options){api=options;installMapEditGuard();
 
  document.addEventListener('click',async ev=>{const b=ev.target.closest('[data-draw-tool]');if(!b)return;ev.preventDefault();const e=api.getEvent(),s=state(e),tool=b.dataset.drawTool;try{if(tool==='done'){s.edit=false;api.render()}else if(tool==='undo'||tool==='redo'){await mapEdit(d=>{const m=d.maps.find(m=>m.hall===s.hall);m.annotations ||= [];if(tool==='undo'&&s.undo.length){s.redo.push(structuredClone(m.annotations));m.annotations=s.undo.pop()}if(tool==='redo'&&s.redo.length){s.undo.push(structuredClone(m.annotations));m.annotations=s.redo.pop()}},e.id)}else{s.tool=tool;api.render()}}catch(err){api.toast(err.message)}});
  document.addEventListener('change',ev=>{const e=api.getEvent();if(!e)return;const s=state(e);if(ev.target.id==='map-draw-color')s.color=ev.target.value;if(ev.target.id==='map-draw-width')s.width=Number(ev.target.value)});

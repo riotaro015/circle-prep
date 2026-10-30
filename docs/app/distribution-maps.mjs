@@ -10,6 +10,8 @@ export async function distributionMapFile(metadata){
  const catalog=await bundled,match=catalog.events?.find(e=>e.key===metadata.key);
  return localFile(match?.map_catalog,'json')?match.map_catalog:null;
 }
+// Trusted bundled vectors keep imported map data and annotations unchanged.
+export function distributionVectorImage(map){const source=map?.sourcePdf;if(source?.id!=='distribution-yaro-2026-autumn-maps'||![1,2].includes(source.page))return null;return './yaro-2026-autumn-vector-'+source.page+'.svg'}
 export function citationText(source){if(!source)return '';const date=new Intl.DateTimeFormat(language(),{year:'numeric',month:'long',day:'numeric',timeZone:'UTC'}).format(new Date(source.date+'T00:00:00Z'));return t('{date}時点の公式サイトより引用（二次配布）').replace('{date}',date)}
 export async function loadDistributionMaps(filename){
  if(!localFile(filename,'json'))throw Error('配布マップの形式が違います。');

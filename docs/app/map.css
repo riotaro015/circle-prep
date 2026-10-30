@@ -65,3 +65,9 @@
 @media(orientation:landscape) and (max-height:550px){.map-own-form{display:flex;align-items:center;gap:10px;padding:6px 10px;flex-wrap:wrap}.map-own-form h3{margin:0;flex:0 1 auto;font-size:.8rem}.map-own-input-row{flex:1;min-width:170px}.map-own-form .error{flex-basis:100%}}
 
 .map-edit-button{flex:none}.map-edit-button[aria-pressed=true]{background:#ffd29c;outline:2px solid #b94735}.map-step-summary button{margin-left:10px;min-height:40px}.map-edit-toolbar{max-height:40%}
+
+/* Editing owns input: prevent browser selection and background actions. */
+body:has(.map-viewport.editing),body:has(.map-viewport.editing) *{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.map-viewport.editing,.map-viewport.editing *{-webkit-user-drag:none}
+.map-viewport.editing .map-zoom{visibility:hidden;pointer-events:none}
+body:has(.map-viewport.editing) .map-header,body:has(.map-viewport.editing) .map-toolbar{opacity:.45}
