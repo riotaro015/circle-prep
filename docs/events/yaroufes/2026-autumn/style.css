@@ -61,3 +61,20 @@
 body{overscroll-behavior-y:contain}
 .pull-refresh{position:fixed;top:calc(env(safe-area-inset-top,0px) + 65px);left:50%;z-index:40;max-width:calc(100vw - 32px);padding:11px 18px;border-radius:24px;background:#fff8f5;color:#826562;box-shadow:0 4px 18px #503d3c26;font-size:13px;font-weight:700;text-align:center;pointer-events:none;opacity:0;transform:translate(-50%,-14px);transition:opacity .15s,transform .15s}
 .pull-refresh.visible{opacity:1;transform:translate(-50%,var(--pull,24px))}.pull-refresh.ready{background:#d8666c;color:#fff}.pull-refresh.loading{background:#fff8f5;color:#826562}.pull-refresh.loading:before{content:'';display:inline-block;width:12px;height:12px;margin-right:8px;border:2px solid #edccc4;border-top-color:#d8666c;border-radius:50%;vertical-align:-2px;animation:pull-spin .8s linear infinite}@keyframes pull-spin{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.pull-refresh{transition:none}.pull-refresh.loading:before{animation:none}}
+
+/* Fixed navigation, shared by phone, tablet and desktop. */
+body:has(.bottom-menu){padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+html:has(.bottom-menu){scroll-padding-bottom:calc(100px + env(safe-area-inset-bottom,0px))}
+.top.bottom-menu{position:fixed;inset:auto 0 0;z-index:30;max-width:none;padding:7px max(8px,env(safe-area-inset-right,0px)) calc(7px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));border:0;border-top:1px solid var(--line);background:#fff8f5f5;box-shadow:0 -4px 24px #503d3c0c;backdrop-filter:blur(16px)}
+.top.bottom-menu nav{grid-template-columns:repeat(5,minmax(0,1fr));max-width:680px;gap:3px;padding:0;background:none;border-radius:0}
+.top.bottom-menu nav a,.top.bottom-menu nav button{position:relative;flex-direction:column;gap:5px;min-width:0;min-height:64px;padding:8px 2px;border-radius:18px;font-size:11px;line-height:1.3;white-space:nowrap;color:var(--muted)}
+.top.bottom-menu nav a[aria-current=page]{background:#fbe4df;color:#b64855;box-shadow:none}
+.bottom-menu img{display:block;width:22px;height:22px;object-fit:contain;opacity:.7}
+.top.bottom-menu nav #cart-count{position:absolute;top:2px;left:calc(50% + 8px);min-width:19px;height:19px;padding:0 3px;font-size:10px}
+#cart-count:empty{display:none}
+.refresh-status{position:fixed;bottom:calc(94px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);z-index:40;width:max-content;max-width:calc(100% - 28px);margin:0;padding:12px 18px;border-radius:18px;background:#503d3c;color:#fff;font-size:13px;box-shadow:var(--shadow)}
+#refresh-menu[aria-busy=true] img{animation:pull-spin 1s linear infinite}
+body:has(.bottom-menu) .pull-refresh{top:env(safe-area-inset-top,0px)}
+@media(max-width:780px){body:has(.bottom-menu) .venue-viewport{height:calc(100svh - 240px - env(safe-area-inset-bottom,0px));min-height:240px}body:has(.bottom-menu) .venue-selection:not([hidden]){bottom:calc(88px + env(safe-area-inset-bottom,0px))}}
+@media(prefers-reduced-motion:reduce){#refresh-menu[aria-busy=true] img{animation:none}}
+@media print{.top.bottom-menu,.refresh-status{display:none!important}body:has(.bottom-menu){padding-bottom:0}}

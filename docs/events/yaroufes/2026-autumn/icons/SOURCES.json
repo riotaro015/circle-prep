@@ -1,0 +1,26 @@
+{
+  "provider": "ICOOON MONO",
+  "license": "https://icooon-mono.com/license/",
+  "icons": {
+    "tasks": {
+      "page": "https://icooon-mono.com/12046-チェックシートのアイコン/",
+      "asset": "https://icooon-mono.com/i/icon_12046/icon_120460.svg"
+    },
+    "bags": {
+      "page": "https://icooon-mono.com/00060-カバンのアイコン素材/",
+      "asset": "https://icooon-mono.com/i/icon_00060/icon_000600.svg"
+    },
+    "map": {
+      "page": "https://icooon-mono.com/10988-地図＆マーカーアイコン2/",
+      "asset": "https://icooon-mono.com/i/icon_10988/icon_109880.svg"
+    },
+    "edit": {
+      "page": "https://icooon-mono.com/15441-鉛筆の無料アイコン7/",
+      "asset": "https://icooon-mono.com/i/icon_15441/icon_154410.svg"
+    },
+    "reset": {
+      "page": "https://icooon-mono.com/15803-更新ボタン/",
+      "asset": "https://icooon-mono.com/i/icon_15803/icon_158030.svg"
+    }
+  }
+}

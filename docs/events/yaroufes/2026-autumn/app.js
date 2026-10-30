@@ -73,9 +73,17 @@ async function refreshLatestMenu(){
    });
   }else{
    // Refresh online assets without restoring offline storage after its deletion.
-   await Promise.all(['./index.html','./data.js','./app.js','./style.css','./shopping.js','./venue.js','./venue-layout.js','./pull-refresh.js','./offline-files.json'].map(async file=>{const response=await fetch(file,{cache:'reload'});if(!response.ok)throw Error('network')}));
+   await Promise.all(['./icons/tasks.svg','./icons/bags.svg','./icons/map.svg','./icons/edit.svg','./icons/reset.svg','./index.html','./data.js','./app.js','./style.css','./shopping.js','./venue.js','./venue-layout.js','./pull-refresh.js','./offline-files.json'].map(async file=>{const response=await fetch(file,{cache:'reload'});if(!response.ok)throw Error('network')}));
   }
   location.reload();
  }finally{busy=false}
 }
 MenuPullRefresh.install({canStart:()=>!busy&&document.body.dataset.view==='catalog',refresh:refreshLatestMenu});
+
+$('#refresh-menu').onclick=async()=>{
+ if(busy)return;
+ const button=$('#refresh-menu'),status=$('#refresh-status');
+ button.disabled=true;button.setAttribute('aria-busy','true');status.hidden=false;status.textContent='更新中…';
+ try{await refreshLatestMenu()}catch{status.textContent='更新できませんでした。通信を確認して、もう一度お試しください。'}
+ finally{button.disabled=false;button.removeAttribute('aria-busy')}
+};
