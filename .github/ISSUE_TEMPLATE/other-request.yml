@@ -1,0 +1,19 @@
+name: その他の依頼・報告
+description: 不具合や改善要望などを送ります。
+title: "その他: "
+body:
+  - type: markdown
+    attributes:
+      value: "公開されるリクエストです。個人情報は記入しないでください。"
+  - type: input
+    id: subject
+    attributes:
+      label: 件名
+    validations:
+      required: true
+  - type: textarea
+    id: note
+    attributes:
+      label: 内容
+    validations:
+      required: true
