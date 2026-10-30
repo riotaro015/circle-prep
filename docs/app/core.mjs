@@ -28,7 +28,7 @@ export function validateRegister(d){
  for(const p of d.products){
   if(typeof p.name!=='string'||!p.name.trim()||!int(p.price)||!int(p.stock)||typeof p.active!=='boolean'||typeof p.image!=='string'||p.image.length>8000000)fail('頒布物情報が不正です。');
   if(!/^[A-Za-z0-9+/]*={0,2}$/.test(p.image)||p.image.length%4)fail('頒布物画像が不正です。');
-  if(!['','new','backlist'].includes(p.release_mark||''))fail('頒布物マークが不正です。');
+  if(!['','new','backlist','goods'].includes(p.release_mark||''))fail('頒布物マークが不正です。');
   if(p.thumbnail&&(!Number.isFinite(p.thumbnail.x)||p.thumbnail.x<0||p.thumbnail.x>1||!Number.isFinite(p.thumbnail.y)||p.thumbnail.y<0||p.thumbnail.y>1||!Number.isFinite(p.thumbnail.zoom)||p.thumbnail.zoom<1||p.thumbnail.zoom>4))fail('画像の切り抜きが不正です。');
  }
  for(const a of d.adjustments){
@@ -39,7 +39,7 @@ export function validateRegister(d){
   if(!['cash','gift'].includes(s.kind)||typeof s.cancelled!=='boolean'||!Array.isArray(s.lines)||!s.lines.length)fail('会計記録が不正です。');
   let total=0;for(const l of s.lines){
    if(!balances.has(l.product_id)||!int(l.quantity,1)||!int(l.price)||typeof l.name!=='string')fail('会計明細が不正です。');
-   total+=l.price*l.quantity;if(!s.cancelled)balances.set(l.product_id,balances.get(l.product_id)-l.quantity);
+   if(l.release_mark!==undefined&&!['','new','backlist','goods'].includes(l.release_mark))fail('頒布物マークが不正です。');total+=l.price*l.quantity;if(!s.cancelled)balances.set(l.product_id,balances.get(l.product_id)-l.quantity);
   }
   if(s.kind==='gift')total=0;
   if(!int(total)||!int(s.total)||s.total!==total||!int(s.paid)||s.paid<total||!int(s.change)||s.change!==s.paid-total||['at','cancelled_at','recipient'].some(k=>typeof s[k]!=='string'))fail('会計金額が不正です。');
@@ -55,7 +55,7 @@ export function checkout(d,cart,paid,kind='cash',recipient='',requestId=uid()){
  const lines=Object.entries(cart).filter(([,q])=>q>0).map(([id,q])=>{
   const p=d.products.find(p=>p.id===id);
   if(!p||!p.active||!int(q,1)||q>p.stock)fail('在庫が不足しています。頒布物を選び直してください。');
-  return {product_id:id,name:p.name,price:p.price,quantity:q};
+  return {product_id:id,name:p.name,price:p.price,quantity:q,release_mark:p.release_mark||''};
  });
  if(!lines.length)fail('頒布物を選んでください。');
  const total=kind==='cash'?lines.reduce((n,l)=>n+l.price*l.quantity,0):0;
@@ -143,7 +143,7 @@ export function validateState(s){
 }
 
 export const markCode=value=>({'新':'new','既':'backlist'}[value]??value);
-export const markLabel=value=>({'new':'新','backlist':'既'}[value]??value);
+export const markLabel=value=>({'new':'新','backlist':'既','goods':'グッズ'}[value]??value);
 export function migrateRegister(original){
  if(!original||![1,2].includes(original.version))fail('レジの形式が正しくありません。');
  const data=structuredClone(original);if(data.version===2)return data;
