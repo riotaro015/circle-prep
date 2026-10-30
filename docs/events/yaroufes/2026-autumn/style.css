@@ -51,3 +51,5 @@
 .product-filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}.product-filters button{min-height:44px;padding:10px 15px;background:#fae9e1}.product-filters button[aria-pressed=true]{background:#d8666c;color:#fff}.product-info p{margin:0;line-height:1.8}.product-bottom{align-items:flex-start}.product-info{overflow-wrap:anywhere}@media(max-width:780px){.filters>label:not(.check){grid-column:1/-1}}
 
 #request-form [hidden]{display:none!important}
+
+.shopping-kind{display:inline-block;margin-bottom:6px;padding:4px 9px;border-radius:9px;background:#fae9e1;color:#916260;font-size:12px;line-height:1.5;overflow-wrap:anywhere}
