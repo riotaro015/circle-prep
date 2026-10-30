@@ -1,6 +1,6 @@
 (function(global){
  'use strict';const KEY='yarou-menus-shopping-v1';
- function create(circles,storage){const index=new Map();for(const c of circles)for(const item of c.items)if(!index.has(item.item_id))index.set(item.item_id,{item,circle:c.id,name:c.name,space:c.space,hall:c.hall});
+ function create(circles,storage){const index=new Map();for(const c of circles)for(const item of [...c.items,...(c.legacy_items||[])])if(!index.has(item.item_id))index.set(item.item_id,{item,circle:c.id,name:c.name,space:c.space,hall:c.hall});
  const state={};let persistent=!!storage;
  try{const saved=JSON.parse(storage?.getItem(KEY)||'{}');for(const [id,row] of Object.entries(saved||{}))if(index.has(id)&&row&&Number.isInteger(row.quantity)&&row.quantity>0&&row.quantity<=999)state[id]={quantity:row.quantity,bought:row.bought===true};}catch{persistent=false}
  function save(){try{storage?.setItem(KEY,JSON.stringify(state))}catch{persistent=false}}
