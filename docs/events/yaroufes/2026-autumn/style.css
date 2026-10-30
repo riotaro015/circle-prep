@@ -115,3 +115,10 @@ body:has(.bottom-menu) .pull-refresh{top:env(safe-area-inset-top,0px)}
 #request-guide{width:min(500px,calc(100% - 32px))}.request-guide-content{padding:28px}.request-guide-content h2{font-size:24px;margin-bottom:16px}.request-guide-content p{font-size:15px;line-height:1.8}.request-guide-note{color:var(--muted);font-size:13px!important}.request-guide-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:10px;margin-top:24px}.request-guide-actions>*{min-height:48px}.request-guide-actions button{background:#fae9e1}@media(max-width:380px){.request-guide-content{padding:22px}.request-guide-actions{flex-direction:column-reverse}.request-guide-actions>*{width:100%}}
 
 .attendance-notice{display:inline-block;padding:8px 14px;border-radius:12px;background:#f8e5e1;color:#a23e4b;font-size:15px;font-weight:700;margin:12px 0 0}#detail-body>.attendance-notice{display:block;margin:0 0 18px}
+
+/* Keep long distribution terms from squeezing the work title or widening dialogs. */
+.product-line{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start}
+.product-line h4{min-width:0;overflow-wrap:anywhere}.product-line .price{max-width:100%;overflow-wrap:anywhere;white-space:normal}
+.product-line.stacked-price{grid-template-columns:minmax(0,1fr);gap:7px}
+.product-line.stacked-price .price{font-size:14px;line-height:1.8;font-weight:600}
+.product-bottom{flex-wrap:wrap}.product-info{flex:1 1 160px;min-width:0}.product-bottom>.quantity-control{margin-left:auto}
