@@ -12,7 +12,7 @@
 
 ## お品書きだけを閲覧
 
-[野郎フェス2026 お品書き一覧](https://riotaro015.github.io/circle-prep/menus/)は、アプリ不要で検索・画像拡大・商品価格の確認ができます。チェックしたサークルはブラウザー内に保存します。
+[野郎フェス2026 お品書き一覧](https://riotaro015.github.io/circle-prep/menus/)は、アプリ不要で検索・画像拡大・商品価格の確認ができます。商品ごとの数量・購入済みと合計金額をまとめる買い物リストも利用できます。チェック・買い物リストはブラウザー内に保存します。追加・訂正リクエストはページ内フォームからGitHubへ送れます（ログインが必要・公開投稿）。
 
 画像を含むオフライン保存と、[ZIPを展開してHTMLを開くだけのオフライン版](https://github.com/riotaro015/circle-prep/releases/download/v0.1.6/yaroufes-2026-menus-offline.zip)にも対応しています。
 

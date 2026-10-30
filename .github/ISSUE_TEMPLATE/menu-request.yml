@@ -1,0 +1,32 @@
+name: お品書きの追加・訂正
+description: 野郎フェスのお品書き追加や価格訂正をリクエストします。
+title: "お品書き追加: "
+body:
+  - type: markdown
+    attributes:
+      value: "公開されるリクエストです。個人情報は記入しないでください。確認後にデータへ反映します。"
+  - type: input
+    id: placement
+    attributes:
+      label: 配置番号
+      placeholder: A-03
+    validations:
+      required: true
+  - type: input
+    id: circle
+    attributes:
+      label: サークル名
+    validations:
+      required: true
+  - type: input
+    id: post
+    attributes:
+      label: お品書きの投稿URL
+      placeholder: https://x.com/...
+    validations:
+      required: true
+  - type: textarea
+    id: note
+    attributes:
+      label: 補足
+      description: 追加・訂正の内容。画像はここへ添付することもできます。

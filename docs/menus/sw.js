@@ -1,5 +1,5 @@
-const CORE='yarou-menus-core-20261030-1',IMAGES='yarou-menus-images-20261030-1';
-const CORE_FILES=['./','./index.html','./style.css','./app.js','./data.js','./offline-files.json','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
+const CORE='yarou-menus-core-20261030-2',IMAGES='yarou-menus-images-20261030-1';
+const CORE_FILES=['./','./index.html','./style.css','./app.js','./shopping.js','./rubik.ttf','./Rubik-OFL.txt','./data.js','./offline-files.json','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(CORE);await c.addAll(CORE_FILES);await self.skipWaiting()})()));
 self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const key of await caches.keys())if(key.startsWith('yarou-menus-core-')&&key!==CORE)await caches.delete(key);await self.clients.claim()})()));
 self.addEventListener('fetch',e=>{const u=new URL(e.request.url),scope=new URL(self.registration.scope);if(e.request.method!=='GET'||u.origin!==scope.origin||!u.pathname.startsWith(scope.pathname))return;e.respondWith((async()=>{const cached=await caches.match(e.request,{ignoreSearch:true});if(cached)return cached;try{const response=await fetch(e.request);if(response.ok&&u.pathname.startsWith(scope.pathname+'images/')){const c=await caches.open(IMAGES);await c.put(e.request,response.clone())}return response}catch(err){if(e.request.mode==='navigate'){const c=await caches.open(CORE);return c.match('./index.html')}throw err}})())});
