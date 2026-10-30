@@ -23,17 +23,28 @@ export async function loadDistributionMaps(filename){
  try{
   const original={id:'distribution-'+filename.replace(/\.json$/,''),name:file.name.slice(0,200),pages:doc.numPages,data:await pdfData(file),attribution:source};
   const maps=[];for(const item of entry.maps){if(item.page>doc.numPages)throw Error('配布マップの形式が違います。');maps.push({hall:item.hall,image:await renderPdfPage(doc,item.page),demo:false,sourcePdf:{id:original.id,page:item.page},sourceAttribution:source})}
-  return {original,maps,filename};
+  return {original,maps,filename,importKey:distributionMapRevision(filename)};
  }finally{await doc.destroy()}
 }
 export function mergeDistributionMaps(data,payload){
- if(data.distributionMapImported===payload.filename)return;
- const missing=payload.maps.filter(m=>!data.maps.some(old=>old.hall===m.hall&&old.image));
+ const key=payload.importKey||payload.filename;
+ if(data.distributionMapImported===key)return;
+ const previouslyImported=!!data.distributionMapImported;
+ let refreshed=false;
+ for(const old of data.maps){
+  const replacement=payload.maps.find(m=>old.sourcePdf?.id===payload.original.id&&m.sourcePdf.page===old.sourcePdf.page);
+  if(replacement){old.image=replacement.image;old.sourceAttribution=replacement.sourceAttribution;refreshed=true}
+ }
+ if(refreshed){const index=(data.documents||[]).findIndex(d=>d.id===payload.original.id);if(index>=0)data.documents[index]=payload.original}
+
+ const missing=previouslyImported?[]:payload.maps.filter(m=>!data.maps.some(old=>old.hall===m.hall&&old.image));
  const kept=data.maps.filter(m=>!missing.some(n=>n.hall===m.hall));
  if(kept.length+missing.length>6)throw Error('マップは6つまでです。');
  const used=missing.length>0;
  if(used){data.maps=kept;data.documents ||= [];if(!data.documents.some(d=>d.id===payload.original.id))data.documents.push(payload.original);data.maps.push(...missing)}
  for(const c of data.circles){if(c.x==null&&payload.maps.some(m=>m.hall===c.sourceHall)&&!data.maps.some(m=>m.hall===c.hall&&m.image))c.hall=c.sourceHall}
  data.maps=data.maps.filter(m=>m.image||data.circles.some(c=>c.hall===m.hall));
- data.distributionMapImported=payload.filename;
+ data.distributionMapImported=key;
 }
+
+export const distributionMapRevision=filename=>filename==='yaro-2026-autumn-maps.json'?filename+'@20261030-v2':filename;

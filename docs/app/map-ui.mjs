@@ -1,6 +1,6 @@
 import {installMapEditGuard,syncMapEditGuard} from './map-edit-guard.mjs';
 import {markerStyle,mountMarkerEditor} from './circle-marker.mjs';
-import {distributionMapFile,loadDistributionMaps,mergeDistributionMaps,citationText,distributionVectorImage} from './distribution-maps.mjs';
+import {distributionMapFile,loadDistributionMaps,mergeDistributionMaps,citationText,distributionVectorImage,distributionMapRevision} from './distribution-maps.mjs';
 import {openMapImport} from './pdf-map-ui.mjs';
 import {mapSteps} from './map-steps.mjs';
 import {protect,markup,t} from './i18n.mjs';
@@ -42,11 +42,12 @@ export function mountMap(){
   importJobs.add(e.id);fetch('./'+circleFile).then(r=>{if(!r.ok)throw Error('サークル一覧を読み込めませんでした。');return r.json()}).then(payload=>mapEdit(d=>{importCircles(d,payload.circles);d.catalogImported=true},e.id)).catch(err=>api.toast(err.message)).finally(()=>importJobs.delete(e.id));
  }
  if((e.metadata.map_catalog||e.metadata.key)&&!importJobs.has('map:'+e.id)){
-  importJobs.add('map:'+e.id);distributionMapFile(e.metadata).then(async filename=>{if(!filename||data(e).distributionMapImported===filename)return;const payload=await loadDistributionMaps(filename);await mapEdit(d=>mergeDistributionMaps(d,payload),e.id);const current=api.getEvent();if(current?.id===e.id&&!data(current).maps.some(m=>m.hall===s.hall))s.hall=payload.maps[0].hall;api.render()}).catch(err=>api.toast(err.message)).finally(()=>importJobs.delete('map:'+e.id));
+  importJobs.add('map:'+e.id);distributionMapFile(e.metadata).then(async filename=>{if(!filename||data(e).distributionMapImported===distributionMapRevision(filename))return;const payload=await loadDistributionMaps(filename);await mapEdit(d=>mergeDistributionMaps(d,payload),e.id);const current=api.getEvent();if(current?.id===e.id&&!data(current).maps.some(m=>m.hall===s.hall))s.hall=payload.maps[0].hall;api.render()}).catch(err=>api.toast(err.message)).finally(()=>importJobs.delete('map:'+e.id));
  }
  const plane=viewport.querySelector('.map-plane'),image=viewport.querySelector('.map-image');let baseW=0,baseH=0;
  function position(){if(!plane)return;const ratio=image.naturalWidth/image.naturalHeight||1.4;const vw=viewport.clientWidth,vh=viewport.clientHeight;baseW=Math.min(vw,vh*ratio);baseH=baseW/ratio;
   if(s.focus){const c=data(api.getEvent()).circles.find(c=>c.id===s.selected);if(c?.x!=null){s.zoom=Math.max(s.zoom,1.8);s.panX=(.5-c.x)*baseW*s.zoom;s.panY=(.5-c.y)*baseH*s.zoom}s.focus=false}
+  const limitX=Math.max(0,(baseW*s.zoom-vw)/2),limitY=Math.max(0,(baseH*s.zoom-vh)/2);s.panX=Math.max(-limitX,Math.min(limitX,s.panX));s.panY=Math.max(-limitY,Math.min(limitY,s.panY));
   const drawScale=image.dataset.vectorMap==='1'?s.zoom:1;plane.style.width=baseW*drawScale+'px';plane.style.height=baseH*drawScale+'px';plane.style.transform=`translate(-50%,-50%) translate(${s.panX}px,${s.panY}px) scale(${s.zoom/drawScale})`;plane.style.setProperty('--inverse',1/s.zoom);
  }
  if(image){image.onload=position;image.onerror=()=>{if(image.dataset.vectorMap==='1'){image.dataset.vectorMap='0';image.src=data(e).maps.find(m=>m.hall===s.hall)?.image||''}};if(image.complete){if(!image.naturalWidth&&image.dataset.vectorMap==='1')image.onerror();else position()}}
