@@ -1,10 +1,14 @@
 # サークルづくり
 
-**BESTIA WORKS Apps / 同人イベントの準備と当日を支えるアプリ**
+**BESTIA WORKS Apps / 同人イベントの荷物・予定・会計・マップを管理するAndroidアプリ**
 
 荷造り、やること、当日の予定、レジ・在庫をイベントごとに管理できます。BESTIA WORKSが制作するアプリのひとつです。
 
-[BESTIA WORKS](https://bestiaworks.com/) · [アプリ紹介](https://bestiaworks.com/app-list/circle-prep/) · [ダウンロード](https://github.com/riotaro015/circle-prep/releases/latest)
+[紹介ページ・画面・使い方](https://riotaro015.github.io/circle-prep/) · [APKをダウンロード](https://github.com/riotaro015/circle-prep/releases/download/v0.1.6/circle-prep-0.1.6.apk) · [更新履歴](https://github.com/riotaro015/circle-prep/releases) · [BESTIA WORKS](https://bestiaworks.com/)
+
+<a href="https://riotaro015.github.io/circle-prep/#screens"><img src="docs/assets/bags.png" width="180" alt="荷物の画面"> <img src="docs/assets/map.png" width="180" alt="サークルマップの画面"> <img src="docs/assets/notes.png" width="180" alt="メモの画面"></a>
+
+画面例は架空のイベント・商品・会場図を使用しています。機能・導入方法・詳しい仕様は[紹介ページ](https://riotaro015.github.io/circle-prep/)にまとめています。
 
 ## ダウンロード
 

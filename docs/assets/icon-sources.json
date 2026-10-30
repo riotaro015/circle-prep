@@ -93,5 +93,11 @@
       "asset": "https://icooon-mono.com/i/icon_00105/icon_001050.svg",
       "adaptation": "Isolated plus polygon and cropped viewBox."
     }
+  },
+  "site_icon": {
+    "file": "app-icon.png",
+    "source": "existing Circle Prep HOME launcher icon",
+    "derived_from": "https://icooon-mono.com/i/icon_00060/icon_000600.svg",
+    "page": "https://icooon-mono.com/00060-カバンのアイコン素材/"
   }
 }
