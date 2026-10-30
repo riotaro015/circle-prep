@@ -1,9 +1,10 @@
 // アプリの版と変更の履歴。Web版・APK・PC版で同じものを使う。
 // 版を上げるときは appVersion と changelog の両方を足す。APKは android/AndroidManifest.xml の
 // versionName も合わせ、versionCode を1つ増やす（増やさないと上書き更新できない）。
-export const appVersion = '0.1.9';
+export const appVersion = '0.2.0';
 
 export const changelog = [
+ {version:'0.2.0',date:'2026-10-30',items:["自サークル登録のSTEP3を削除し、会場図から直接編集モードを開けるようにしました。", "ペン・蛍光マーカー・消しゴム・戻る・進むで会場図へ書き込めます。"]},
  {version:'0.1.9',date:'2026-10-30',items:["頒布物の区分に準新刊・無配・その他を追加し、お品書きページの種別にそろえました。売上分析にも対応しています。"]},
  {version:'0.1.8',date:'2026-10-30',items:["縦向き画面では売上分析の集計カードを2行2列で表示します。"]},
  {version:'0.1.7',date:'2026-10-30',items:["レジに時間帯別・購入パターン別・頒布物の組み合わせ別の売上分析を追加しました。", "頒布物の区分にグッズを追加し、新しい会計には会計時の区分を保存します。"]},
