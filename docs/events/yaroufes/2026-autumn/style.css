@@ -45,3 +45,5 @@
 }
 
 .venue-seat{pointer-events:none;cursor:inherit}.venue-seat:hover{stroke:transparent}.venue-seat.pending:hover{stroke:#c74d5d}.venue-seat.partial:hover{stroke:#bd8f29}.venue-seat.bought:hover{stroke:#397c5c}
+
+@media(max-width:780px){.filters{display:grid;grid-template-columns:max-content max-content;gap:10px 20px}.filters>label:first-child{grid-column:1/-1}.filters>.check{white-space:nowrap;gap:8px;min-height:44px}.filters{font-size:13px}}
