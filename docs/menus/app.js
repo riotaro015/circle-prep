@@ -22,7 +22,7 @@ $('#cards').addEventListener('click',e=>{const b=e.target.closest('[data-open]')
 document.addEventListener('change',e=>{if(e.target.matches('[data-mark]'))saveMark(e.target.dataset.mark,e.target.checked)});
 $('#block-tabs').addEventListener('click',e=>{const b=e.target.closest('[data-block]');if(b){block=b.dataset.block;render()}});
 $('#search').addEventListener('input',()=>render());for(const id of ['hall','has-items','marked-only'])$('#'+id).addEventListener('change',()=>render());
-$('#reset').onclick=()=>{$('#search').value='';$('#hall').value='';$('#has-items').checked=true;$('#marked-only').checked=false;block='';render();$('#search').focus()};
+$('#reset').onclick=()=>{$('#search').value='';$('#hall').value='';$('#has-items').checked=false;$('#marked-only').checked=false;block='';render();$('#search').focus()};
 $('#more').onclick=()=>{limit+=24;render(false)};$('#close-detail').onclick=closeDetail;$('#detail').addEventListener('cancel',e=>{e.preventDefault();closeDetail()});
 $('#detail-body').addEventListener('click',e=>{const b=e.target.closest('[data-image]');if(!b)return;const c=circles.find(c=>c.id===b.dataset.circle),image=c?.images[Number(b.dataset.image)];if(!image?.asset)return;$('#full-image').src=image.asset;$('#full-image').alt=c.name+' / '+image.kind;$('#full-image').classList.remove('expanded');$('#image-dialog').showModal()});
 $('#close-image').onclick=()=>$('#image-dialog').close();$('#full-image').onclick=()=>$('#full-image').classList.toggle('expanded');
