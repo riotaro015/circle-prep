@@ -1,4 +1,4 @@
-const CORE='yarou-event-core-20261031-49',IMAGES='yarou-menus-images-20261030-1';
+const CORE='yarou-event-core-20261031-50',IMAGES='yarou-menus-images-20261030-1';
 let offlineDisabled=false;const cacheWrites=new Set();
 async function cacheImage(request,response){if(offlineDisabled)return;const task=(async()=>{const cache=await caches.open(IMAGES);if(!offlineDisabled)await cache.put(request,response)})();cacheWrites.add(task);try{await task}finally{cacheWrites.delete(task)}}
 const CORE_FILES=['./icons/tasks.svg','./icons/bags.svg','./icons/map.svg','./icons/edit.svg','./icons/reset.svg','./','./updates.html','./index.html','./style.css','./app.js','./pull-refresh.js','./shopping.js','./venue.js','./venue-layout.js','./rubik.ttf','./Rubik-OFL.txt','./data.js','./offline-files.json','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
