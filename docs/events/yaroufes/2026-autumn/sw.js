@@ -1,4 +1,4 @@
-const CORE='yarou-event-core-20261030-15',IMAGES='yarou-menus-images-20261030-1';
+const CORE='yarou-event-core-20261030-16',IMAGES='yarou-menus-images-20261030-1';
 const CORE_FILES=['./','./index.html','./style.css','./app.js','./shopping.js','./venue.js','./venue-layout.js','./rubik.ttf','./Rubik-OFL.txt','./data.js','./offline-files.json','./manifest.webmanifest','./icon-192.png','./icon-512.png'];
 self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(CORE);await c.addAll(CORE_FILES);await self.skipWaiting()})()));
 self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const key of await caches.keys())if(key.startsWith('yarou-event-core-')&&key!==CORE)await caches.delete(key);await self.clients.claim()})()));

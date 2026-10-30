@@ -47,3 +47,5 @@
 .venue-seat{pointer-events:none;cursor:inherit}.venue-seat:hover{stroke:transparent}.venue-seat.pending:hover{stroke:#c74d5d}.venue-seat.partial:hover{stroke:#bd8f29}.venue-seat.bought:hover{stroke:#397c5c}
 
 @media(max-width:780px){.filters{display:grid;grid-template-columns:max-content max-content;gap:10px 20px}.filters>label:first-child{grid-column:1/-1}.filters>.check{white-space:nowrap;gap:8px;min-height:44px}.filters{font-size:13px}}
+
+.product-filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}.product-filters button{min-height:44px;padding:10px 15px;background:#fae9e1}.product-filters button[aria-pressed=true]{background:#d8666c;color:#fff}.product-info p{margin:0;line-height:1.8}.product-bottom{align-items:flex-start}.product-info{overflow-wrap:anywhere}@media(max-width:780px){.filters>label:not(.check){grid-column:1/-1}}
