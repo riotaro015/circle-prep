@@ -78,3 +78,36 @@ body:has(.bottom-menu) .pull-refresh{top:env(safe-area-inset-top,0px)}
 @media(max-width:780px){body:has(.bottom-menu) .venue-viewport{height:calc(100svh - 240px - env(safe-area-inset-bottom,0px));min-height:240px}body:has(.bottom-menu) .venue-selection:not([hidden]){bottom:calc(88px + env(safe-area-inset-bottom,0px))}}
 @media(prefers-reduced-motion:reduce){#refresh-menu[aria-busy=true] img{animation:none}}
 @media print{.top.bottom-menu,.refresh-status{display:none!important}body:has(.bottom-menu){padding-bottom:0}}
+
+/* Tablet portrait and landscape. */
+@media screen and (min-width:600px) and (max-width:1366px){
+ .wrap{padding-left:28px;padding-right:28px}
+ .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+ .filters{display:flex;flex-wrap:wrap;gap:12px 24px}.filters>label{grid-column:auto!important;min-height:48px;font-size:14px}.filters select{min-height:48px}
+ .block-tabs button{min-height:44px;min-width:44px;font-size:14px}
+ .favorite{min-height:48px;font-size:13px}.card-open{min-height:58px}
+ .top.bottom-menu nav{max-width:900px;gap:10px}
+ .top.bottom-menu nav a,.top.bottom-menu nav button{font-size:14px;min-height:68px;gap:6px}
+ .bottom-menu img{width:24px;height:24px}
+ .quantity-control button{min-width:48px;min-height:48px}.quantity-control input{min-height:44px;font-size:19px}
+ .shopping-product h3{font-size:18px}.shopping-product p{font-size:14px}.bought-check{min-height:48px;font-size:12px}.remove-item{min-height:48px;font-size:14px}
+ dialog{width:min(960px,calc(100% - 48px));max-height:calc(100dvh - 48px)}
+ .detail-header button{min-height:48px;min-width:72px}.detail-images .image-card img{height:340px}
+ .product h4{font-size:19px}.product-info,.product-info p{font-size:14px}.product-filters button{min-height:48px}
+ body[data-view=map] .intro{padding-top:18px;padding-bottom:16px}body[data-view=map] .intro .eyebrow{display:none}body[data-view=map] .intro h1{font-size:30px}
+ .venue-halls button,.venue-zoom button{min-height:48px;font-size:14px}.venue-legend{font-size:13px}
+ body:has(.bottom-menu) .venue-viewport{height:calc(100dvh - 290px - env(safe-area-inset-bottom,0px));min-height:240px;max-height:none}
+}
+@media screen and (min-width:1000px) and (max-width:1366px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+@media screen and (min-width:600px) and (max-width:1366px) and (orientation:portrait){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.detail-info{min-width:0}
+@media screen and (min-width:900px) and (orientation:landscape){
+ #detail{width:min(1240px,calc(100% - 48px))}
+ .detail-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:28px;align-items:start;margin-top:20px}
+ .detail-layout>.detail-images{grid-template-columns:minmax(0,1fr);margin:0;gap:16px;min-width:0}
+ .detail-layout .image-card img{height:auto;max-height:none;width:100%;object-fit:contain}
+ .detail-info .product-bottom{flex-wrap:wrap}.detail-info .quantity-control{margin-left:auto}
+ .detail-layout:has(>.detail-images:empty){grid-template-columns:minmax(0,1fr)}.detail-images:empty{display:none}
+}
