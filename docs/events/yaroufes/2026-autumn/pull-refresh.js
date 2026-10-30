@@ -13,8 +13,8 @@ window.MenuPullRefresh={install({canStart,refresh}){
   if(event.touches.length!==1||!eligible(event.target)){reset();return}
   const touch=event.touches[0],dx=touch.clientX-start.x,dy=touch.clientY-start.y;
   if(dy<0||Math.abs(dx)>Math.max(24,dy*.65)){reset();return}
+  if(dy>0&&event.cancelable)event.preventDefault();
   distance=dy;if(dy<12){indicator.classList.remove('visible','ready');return}
-  if(event.cancelable)event.preventDefault();
   distance=dy;indicator.classList.add('visible');indicator.classList.toggle('ready',distance>=180);
   indicator.textContent=distance>=180?'離して更新':'下に引いて更新';
   indicator.style.setProperty('--pull',Math.min(54,dy*.25)+'px');
