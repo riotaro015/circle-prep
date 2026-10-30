@@ -87,3 +87,7 @@ $('#refresh-menu').onclick=async()=>{
  try{await refreshLatestMenu()}catch{status.textContent='更新できませんでした。通信を確認して、もう一度お試しください。'}
  finally{button.disabled=false;button.removeAttribute('aria-busy')}
 };
+
+$('#request-open').onclick=()=>$('#request-guide').showModal();
+$('#request-guide-close').onclick=()=>$('#request-guide').close();
+$('#request-guide').addEventListener('close',()=>$('#request-open').focus());
