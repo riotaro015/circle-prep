@@ -108,6 +108,7 @@ export function metadata(source){
  if(time&&!/^([01]\d|2[0-3]):[0-5]\d$/.test(time))fail('入場時刻が正しくありません。');
  if(source.map_catalog!==undefined&&(typeof source.map_catalog!=='string'||!/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,119}\.json$/.test(source.map_catalog)))fail('配布マップの形式が違います。');
  if(source.map_attribution!==undefined){const a=source.map_attribution;if(!a||typeof a.date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(a.date)||!Number.isFinite(Date.parse(a.date))||typeof a.url!=='string'||a.url.length>1000||!validLink(a.url))fail('引用元の形式が違います。')}
+ if(source.guide_sources!==undefined&&(!Array.isArray(source.guide_sources)||source.guide_sources.length>10||source.guide_sources.some(item=>!item||typeof item.title!=='string'||item.title.length>120||typeof item.url!=='string'||item.url.length>1000||!validLink(item.url))))fail('案内が不正です。');
  const translations=source.translations??{};
  if(!translations||typeof translations!=='object'||Array.isArray(translations)||Object.keys(translations).length>5)fail('翻訳データの形式が正しくありません。');
  for(const [code,entries] of Object.entries(translations)){
